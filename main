@@ -1,0 +1,31 @@
+</textarea></td></tr>
+
+                                <tr><td>Documents Received?</td><td><select class="item" id="documents" onchange="updatetb()"><option value="No">No</option><option value="Yes">Yes</option></select></td></tr>
+
+                                <tr><td>Verified Social Data?</td><td><select class="item" id="socdatachg" onchange="updatetb()"><option value="No">No</option><option value="Yes">Yes</option></select></td></tr>
+
+                                <tr><td>Dunning Lock Placed?</td><td><select class="item" id="toggledunninglock" onchange="updatetb()"><option value="No">No</option><option value="Yes">Yes</option></select></td></tr>
+
+                                <tr><td>Correspondence Attached</td><td><select class="item" id="correattached" onchange="updatetb()"><option value="No">No</option><option value="Yes">Yes</option></select></td></tr>
+
+                                <tr><td>zletters</td><td><select class="item" id="zletters" onchange="updatetb()"><option value="No">No</option><option             value="Yes">Yes</option></select></td></tr>
+
+                                <tr><td>Contact ID?</td><td><input class="item" type="text" id="contactid" oninput="updatetb()" /></td></tr>
+
+                                <tr id="corfn"><td>Correspondence Filename:</td><td><input type="text" id="correfilename" class="item" readonly placeholder="Required fields missing" onclick="copiedfn2clipboard();" /></td></tr></table></form>Click the box to copy note to clipboard<br><textarea onclick="copiedtoclipboard()" readonly class="fc" id="fct" placeholder="Information will populate here when fields are completed."></textarea>
+
+                </table>
+
+</form>`;
+
+ 
+
+document.getElementById("page").innerHTML = renderer;
+
+ 
+
+</script>
+
+</body>
+
+</html>
