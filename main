@@ -1,4 +1,332 @@
-</textarea></td></tr>
+<html>
+
+<head><title>Note Creator</title></head>
+
+<body>
+
+<style>
+
+body
+
+{
+
+background-color: #ADD8E6;
+
+font-family: Trebuchet MS;
+
+}
+
+.item
+
+{
+
+width: 300px;
+
+}
+
+.content
+
+{
+
+width: 300px;
+
+height: 100px;
+
+resize: none;
+
+}
+
+.fc
+
+{
+
+width: 568px;
+
+height: 345px;
+
+resize: none;
+
+}
+
+</style>
+
+<div id="page" />
+
+<script>
+
+let iscore, renderer, bpnumval, correocall, callernum, contname, ptadef, auth, ttnap, tpadvises, resolution, bchhdr, docrec, socchg, sochgstr, dlpcd, correoattch, zlett, countachid, finalnote, correfilename, contacttype, contactnoun, mleadingzero, dleadingzero = ""; /* allocates all the variables we'll end up using. */
+
+ 
+
+function updatetb() {
+
+ 
+
+                /* This function updates the information in the text box upon update. */
+
+ 
+
+                bpnumval = document.getElementById("bpnum").value;
+
+                correocall = document.getElementById("corrocall").value;
+
+                callernum = document.getElementById("callernum").value;
+
+                contname = document.getElementById("contactname").value;
+
+                ptadef = document.getElementById("ptaid").value;
+
+                auth = document.getElementById("authorized").value;
+
+                ttnap = document.getElementById("ttnappper").value;
+
+                tpadvises = document.getElementById("tpadvises").value;                            /* This section grabs field content to parse */
+
+                resolution = document.getElementById("resolution").value;
+
+                bchhdr = document.getElementById("batchheader").value;
+
+                docrec = document.getElementById("documents").value;
+
+                socchg = document.getElementById("socdatachg").value;
+
+                dlpcd = document.getElementById("toggledunninglock").value;
+
+                correoattch = document.getElementById("correattached").value;
+
+                zlett = document.getElementById("zletters").value;
+
+                countachid = document.getElementById("contactid").value;
+
+                taxtype = document.getElementById("taxtype").value;
+
+                               
+
+                var datestr = "";
+
+                                const month = new Date().getMonth() + 1;
+
+                                const day = new Date().getDate();
+
+                                /* Pulls system date for filename designation. Javascript months are 0 - 11 so we must add one.*/
+
+                                const year = new Date().getFullYear();
+
+ 
+
+                                if (month < 10) { mleadingzero = "0"; } else { mleadingzero = "";} /* when month is under 10 this adds a leading zero */
+
+                                if (day < 10) { dleadingzero = "0"; } else { dleadingzero = "";} /* when day is under 10 this adds a leading zero */
+
+ 
+
+                datestr = year + "_" + mleadingzero + month + "_" + dleadingzero + day; /* Defines filename for field */
+
+ 
+
+                if (correocall == "call") {
+
+                                contacttype = "Caller"; /* adjusts textbox output according to contact type */
+
+                                contactnoun = "Number";
+
+                                iscore = "";
+
+                                bchhdr = "";
+
+                                document.getElementById("batchheader").readOnly = true;
+
+                                document.getElementById("batchheader").value = "";
+
+                                document.getElementById("batchheader").placeholder = "Field not active for phone calls";
+
+                                }
+
+ 
+
+                if (correocall == "correspondence") {
+
+                                contacttype = "Correspondent"; /* adjusts textbox output according to contact type */
+
+                                contactnoun = "Address";
+
+                                iscore = "Batch ID: ";
+
+                                bchhdr = bchhdr + "\n";
+
+                                document.getElementById("batchheader").readOnly = false;
+
+                                document.getElementById("batchheader").placeholder = "";
+
+                                }
+
+ 
+
+                if (socchg != "Yes") {
+
+                                sochgstr = "\nVerified Social Data: No";
+
+                } else {
+
+                                sochgstr = "\nVerified Social Data: Yes";
+
+                }
+
+ 
+
+               finalnote = iscore + bchhdr + "The Department received " + correocall + " from " + contname + "\n" + contactnoun + ": " + callernum + "\nPosition in the business or title " + ptadef + "\n" + auth + sochgstr + "\nTax Type: " + taxtype + "\nApplied periods: " + ttnap + "\nTaxpayer Advises " + tpadvises + "\nAfter reviewing the account " + resolution;
+
+ 
+
+/* String concatenation for finalized textbox content */
+
+ 
+
+ 
+
+ 
+
+                correfilename = datestr + "_TSPCor_"+taxtype+"_BP" + bpnumval; /* String concatenation for finalized corre filename content */
+
+ 
+
+ 
+
+        if (taxtype != "") {
+
+            document.getElementById("correfilename").value = correfilename; /* Evaluates whether or not a tax type is selected */
+
+        } else {
+
+            document.getElementById("correfilename").placeholder = "Please select a tax type";
+
+        }
+
+ 
+
+                if (docrec != "No") {
+
+                                finalnote = finalnote + "\nDocuments Received"; /* Checks fields for null content and omits if field is empty. */
+
+                }
+
+ 
+
+                if (dlpcd != "No") {
+
+                                finalnote = finalnote + "\nDunning Lock Placed"; /* Checks fields for null content and omits if field is empty. */
+
+                }
+
+ 
+
+                if (correoattch != "No") {
+
+                                finalnote = finalnote +  "\nCorrespondence Attached"; /* Checks fields for null content and omits if field is empty. */
+
+                }
+
+ 
+
+                if (zlett != "No") {
+
+                                finalnote = finalnote + "\nZletter Sent"; /* Checks fields for null content and omits if field is empty. */
+
+                }
+
+ 
+
+                if (countachid != "") {
+
+                                finalnote = finalnote + "\nContact ID: " + countachid; /* Checks fields for null content and omits if field is empty. */
+
+                }
+
+ 
+
+               
+
+ 
+
+document.getElementById("fct").innerHTML = finalnote; /* defines textbox content */
+
+ 
+
+return; /* exits function */
+
+}
+
+ 
+
+function copiedtoclipboard()
+
+{
+
+                var copied = document.getElementById("fct"); /* Copies textarea content to clipboard. */
+
+                if (copied.value != "") {
+
+                                navigator.clipboard.writeText(copied.value);
+
+                                alert("Copied note to clipboard.");
+
+                } else {
+
+                                alert("Please complete required info and try again. Nothing was copied to clipboard.");
+
+                }
+
+}
+
+ 
+
+function copiedfn2clipboard()
+
+{
+
+                var copied2 = document.getElementById("correfilename").value;
+
+                if (copied2 != "" && taxtype != "") {
+
+                                navigator.clipboard.writeText(copied2);
+
+                                alert("Copied filename to clipboard.");
+
+                } else {
+
+                                alert("Please complete required info and try again. Nothing was copied to clipboard.");
+
+                }
+
+}
+
+ 
+
+/* Form and content renderer */
+
+renderer = `<form>
+
+                                <table>
+
+                                <tr><td>Batch Header?</td><td><input class="item" type="text" id="batchheader" oninput="updatetb()" placeholder="Field not active for phone calls" readonly /></td></tr>                           
+
+                                <tr><td>Business Partner #</td><td><input class="item" type="number" id="bpnum" oninput="updatetb()" /></td></tr>
+
+                                <tr><td>Call or Correspondence</td><td><select class="item" id="corrocall" onchange="updatetb()"><option value="call">Call</option><option value="correspondence">Correspondence</option></select></td>
+
+                                <tr><td>Received Call/Correspondence From</td><td><input class="item" type="text" id="callernum" oninput="updatetb()" /></td></tr>
+
+                                <tr><td>Contact Name:</td><td><input class="item" type="text" id="contactname" oninput="updatetb()" /></td></tr>
+
+                                <tr><td>Position/Title/Affiliation</td><td><input class="item" type="text" id="ptaid" oninput="updatetb()" /></td></tr>
+
+                                <tr><td>Authorized?</td><td><select class="item" id="authorized" onchange="updatetb()"><option value="Authorized: Yes">Authorized</option><option value="Authorized: No">Not Authorized</option></select></td></tr>
+
+                                <tr><td><select id="taxtype" value="Tax type" onchange="updatetb()"><option value="">Tax Type</option><option value="SUT">SUT</option><option value="RT">RT</option><option                value="CIT">CIT</option><option value="SW">SW</option></select>& applied period</td><td><input class="item" type="text" id="ttnappper" oninput="updatetb()"></input></td></tr>
+
+                                <tr><td>Taxpayer Advises: <td><textarea class="content" id="tpadvises" oninput="updatetb()"></textarea></td></tr>
+
+                                <tr><td>Resolution: </td><td><textarea class="content" id="resolution" oninput="updatetb()"></textarea></td></tr>
 
                                 <tr><td>Documents Received?</td><td><select class="item" id="documents" onchange="updatetb()"><option value="No">No</option><option value="Yes">Yes</option></select></td></tr>
 
